@@ -26,8 +26,9 @@ Before you get started, make sure you have the following software installed on y
 run a GET query by id:
 http://localhost:5000/api/products/(id)
 
-Put query to update id: 
+run a PUT query to update id: 
 http://localhost:5000/api/products
+
 parameters:
 { "id": (id), "new_price": (new price)} 
 where new price is a number
