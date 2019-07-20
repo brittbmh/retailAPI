@@ -7,8 +7,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('build'));
 
-const feedbackRouter = require('./routes/feedback.router.js');
-app.use('/api/retailAPI', feedbackRouter);
+const retailRouter = require('./routes.js');
+app.use('/api/retailAPI', retailRouter);
 
 app.listen(PORT, () => {
     console.log('Listening on port: ', PORT);
