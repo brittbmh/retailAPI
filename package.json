@@ -1,0 +1,22 @@
+{
+  "name": "retailapi",
+  "version": "1.0.0",
+  "description": "retail api case study for Target",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brittbmh/retailAPI.git"
+  },
+  "author": "Britt Carter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brittbmh/retailAPI/issues"
+  },
+  "homepage": "https://github.com/brittbmh/retailAPI#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
