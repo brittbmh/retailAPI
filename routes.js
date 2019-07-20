@@ -29,7 +29,7 @@ router.get('/:id', (req, res) => {
             let result = {};
             let URL = `${BASE_URL}${id}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics`;
             let apiResponse = await axios.get(URL);
-            result.id = apiResponse.data.product.item.tcin;
+            result.id = parseInt(apiResponse.data.product.item.tcin);
             result.name = apiResponse.data.product.item.product_description.title;
             let dbResponse = await Product.find({ 'id': id });
             let product = dbResponse[0];
@@ -48,9 +48,9 @@ router.get('/:id', (req, res) => {
     });
 })
 
-router.put('/', (req, res) => {
+router.put('/:id', (req, res) => {
     console.log('In PUT', req.body);
-    const id = req.body.id;
+    const id = req.params.id;
     const newPrice = req.body.new_price;
     Product.updateOne({ id: id }, { value: newPrice }).then((response) => {
         res.sendStatus(200);
