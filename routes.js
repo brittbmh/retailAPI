@@ -12,46 +12,40 @@ mongoose.connection.once('connected', () => {
 
 const Schema = mongoose.Schema;
 const productSchema = new Schema({
-    id: {type: Number, required: true},
-    value: {type: Number},
-    currency_code: {type: String}
+    id: { type: Number, required: true },
+    value: { type: Number },
+    currency_code: { type: String }
 })
 
 const Product = mongoose.model('Product', productSchema)
 
 const BASE_URL = 'https://redsky.target.com/v2/pdp/tcin/'
 
-const data = [{
-    "id": 13860428,
-    "name": "The Big Lebowski (Blu-ray) (Widescreen)",
-    "current_price": {
-        "value": 13.49,
-        "currency_code": "USD"
-    }
-}];
-
 router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    console.log('In GET by id', id);
-    // let result = {current_price: {currency_code: "USD"}};
-    // let URL = `${BASE_URL}${id}?excludes=taxonomy,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics`;
-    // axios.get(URL).then((response) => {
-    //     result.id = response.data.product.item.tcin;
-    //     result.name = response.data.product.item.product_description.title;
-    //     result.current_price.value = response.data.product.price.offerPrice.price;
-    //     console.log(result);
-    //     res.send(result);
-    // }).catch(error => {
-    //     console.log('Error in Get by id', error);
-    //     res.sendStatus(500);
-    // })
-    Product.find({}).then((results) => {
-        res.send(results);
-    }).catch(error => {
+    (async () => {
+        try {
+            const id = req.params.id;
+            console.log('In GET by id', id);
+            let result = {};
+            let URL = `${BASE_URL}${id}?excludes=taxonomy,price,promotion,bulk_ship,rating_and_review_reviews,rating_and_review_statistics,question_answer_statistics`;
+            let apiResponse = await axios.get(URL);
+            result.id = apiResponse.data.product.item.tcin;
+            result.name = apiResponse.data.product.item.product_description.title;
+            let dbResponse = await Product.find({ 'id': id });
+            let product = dbResponse[0];
+            let current_price = {};
+            current_price.value = product.value;
+            current_price.currency_code = product.currency_code;
+            result.current_price = current_price;
+            res.send(result);
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    })().catch(error => {
         console.log('Error in Get by id', error);
         res.sendStatus(500);
-    })
-
+    });
 })
 
 module.exports = router;
