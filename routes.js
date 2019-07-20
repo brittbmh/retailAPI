@@ -43,9 +43,21 @@ router.get('/:id', (req, res) => {
             throw error;
         }
     })().catch(error => {
-        console.log('Error in Get by id', error);
+        console.log('Error in GET by id', error);
         res.sendStatus(500);
     });
+})
+
+router.put('/', (req, res) => {
+    console.log('In PUT', req.body);
+    const id = req.body.id;
+    const newPrice = req.body.new_price;
+    Product.updateOne({ id: id }, { value: newPrice }).then((response) => {
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('Error in PUT', error);
+        res.sendStatus(500);
+    })
 })
 
 module.exports = router;
