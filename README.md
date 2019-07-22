@@ -26,11 +26,11 @@ Before you get started, make sure you have the following software installed on y
 run a GET query by id:
 http://localhost:5000/api/products/(id)
 
-run a PUT query to update id: 
-http://localhost:5000/api/products
+run a PUT query to update a product by id: 
+http://localhost:5000/api/products/(id)
 
 parameters:
-{ "id": (id), "new_price": (new price)} 
+{"new_price": (new price)} 
 where new price is a number
 
 Example product IDs: 12149250, 12110209, 52349598, 52343339, 53782617, 53192988, 53741474, 53306858, 14168377
